@@ -1,0 +1,24 @@
+<?php
+
+// CATATAN: Ini BUKAN file baru yang berdiri sendiri.
+// Tambahkan baris withMiddleware(...) di bawah ke file bootstrap/app.php
+// yang sudah ada di project Laravel Anda (Laravel 11 ke atas).
+//
+// Kalau pakai Laravel 10 ke bawah, daftarkan lewat
+// app/Http/Kernel.php di array $middlewareAliases:
+//     'role' => \App\Http\Middleware\EnsureRole::class,
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'role' => \App\Http\Middleware\EnsureRole::class,
+        ]);
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();

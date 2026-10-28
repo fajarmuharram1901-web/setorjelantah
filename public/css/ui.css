@@ -1,0 +1,259 @@
+/* =========================================================
+   SetorJelantah — komponen interaktif
+   Dialog, Snackbar, Switch, Checkbox, Dropdown.
+   Memakai variabel warna dari style.css (--gold, --ink, dst).
+   ========================================================= */
+
+/* ---------- Dialog ---------- */
+.dialog-latar {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(36, 26, 15, 0.45);
+    opacity: 0;
+    transition: opacity .18s ease;
+}
+.dialog-latar[hidden] { display: none; }
+.dialog-latar.tampil { opacity: 1; }
+
+.dialog {
+    width: 100%;
+    max-width: 420px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 22px 18px;
+    box-shadow: 0 18px 50px rgba(36, 26, 15, 0.25);
+    transform: translateY(8px) scale(.98);
+    transition: transform .18s ease;
+}
+.dialog-latar.tampil .dialog { transform: none; }
+.dialog h3 { margin: 0 0 6px; font-size: 1.1rem; }
+.dialog p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+.dialog-aksi {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+/* ---------- Snackbar ---------- */
+.snackbar-wadah {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: calc(100% - 32px);
+    max-width: 460px;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+.snackbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.9rem;
+    box-shadow: 0 8px 24px rgba(36, 26, 15, 0.28);
+    border-left: 4px solid var(--gold);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity .2s ease, transform .2s ease;
+    pointer-events: auto;
+}
+.snackbar.tampil { opacity: 1; transform: none; }
+.snackbar-success { border-left-color: var(--olive); }
+.snackbar-error, .snackbar-danger { border-left-color: var(--rust); }
+.snackbar-pesan { flex: 1; }
+.snackbar-tutup {
+    background: none;
+    border: none;
+    color: inherit;
+    opacity: .7;
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 2px;
+    width: auto;
+}
+.snackbar-tutup:hover { opacity: 1; }
+
+/* ---------- Switch ---------- */
+.switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    user-select: none;
+}
+.switch input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    pointer-events: none;
+}
+.switch-track {
+    position: relative;
+    flex: 0 0 auto;
+    width: 44px;
+    height: 24px;
+    border-radius: 999px;
+    background: var(--line);
+    transition: background .18s ease;
+}
+.switch-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--paper);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    transition: transform .18s ease;
+}
+.switch input:checked + .switch-track { background: var(--gold); }
+.switch input:checked + .switch-track .switch-thumb { transform: translateX(20px); }
+.switch input:focus-visible + .switch-track {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* ---------- Checkbox ---------- */
+.check {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-weight: 400;
+    font-size: 0.86rem;
+    cursor: pointer;
+    line-height: 1.4;
+}
+.check input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+}
+.check-kotak {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    border: 1.5px solid var(--ink-soft);
+    border-radius: 4px;
+    background: var(--paper);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s ease, border-color .15s ease;
+}
+.check-kotak::after {
+    content: '';
+    width: 4px;
+    height: 9px;
+    margin-top: -2px;
+    border: solid var(--paper);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform .12s ease;
+}
+.check input:checked + .check-kotak {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+.check input:checked + .check-kotak::after { transform: rotate(45deg) scale(1); }
+.check input:focus-visible + .check-kotak {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* ---------- Dropdown ---------- */
+.dropdown-ui { position: relative; width: 100%; }
+.dropdown-ui > select {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+.dropdown-tombol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 13px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.98rem;
+    text-align: left;
+    cursor: pointer;
+}
+.filters .dropdown-tombol { padding: 8px 11px; font-size: 0.85rem; }
+.dropdown-tombol:focus-visible,
+.dropdown-ui.buka .dropdown-tombol {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-tint);
+}
+.dropdown-caret {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border: solid var(--ink-soft);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform .15s ease;
+}
+.dropdown-ui.buka .dropdown-caret { transform: rotate(225deg) translateY(-2px); }
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 50;
+    margin: 0;
+    padding: 4px;
+    list-style: none;
+    max-height: 240px;
+    overflow-y: auto;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(36, 26, 15, 0.14);
+}
+.dropdown-menu[hidden] { display: none; }
+.dropdown-opsi {
+    padding: 8px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.dropdown-opsi.fokus { background: var(--paper-warm); }
+.dropdown-opsi[aria-selected="true"] {
+    background: var(--gold-tint);
+    color: var(--gold-deep);
+    font-weight: 600;
+}
